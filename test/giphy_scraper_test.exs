@@ -25,8 +25,7 @@ defmodule GiphyScraperTest do
         ]
 
       # Set up Mox to expect a call to `call/1`
-      GiphyApiRequestMock
-        |> expect(:call, fn _query -> mock_data end)
+      expect(GiphyApiRequestMock, :call, fn _query -> mock_data end)
 
       # Expected result
       expected_result = [

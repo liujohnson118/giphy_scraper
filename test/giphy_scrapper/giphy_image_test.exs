@@ -25,10 +25,10 @@ defmodule GiphyScraper.GiphyImageTest do
       image = %GiphyImage{id: id, url: url, username: username, title: title}
 
       # Verify the struct fields
-      assert image.id == id
-      assert image.url == url
-      assert image.username == username
-      assert image.title == title
+      assert image.id === id
+      assert image.url === url
+      assert image.username === username
+      assert image.title === title
     end
   end
 end

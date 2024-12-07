@@ -24,7 +24,7 @@ defmodule GiphyApiRequestTest do
     assert is_list(result)
 
     # Assert that the list contains exactly 25 gifs, no more and no less
-    assert length(result) == 25  # Page size is 25
+    assert length(result) === 25  # Page size is 25
 
     # Assert that each gif in the list has the expected keys
     assert Enum.all?(result, fn gif ->
@@ -40,11 +40,8 @@ defmodule GiphyApiRequestTest do
     # Test the call function with the query "police"
     result = GiphyApiRequest.call("adkfjadkfjadkjfa")
 
-    # Assert that the result is a list
-    assert is_list(result)
-
-    # Assert that the list contains exactly 25 gifs, no more and no less
-    assert length(result) == 0  # Page size is 25
+    # Assert that the result is an empty list
+    assert result === []
   end
 
   # Sample GIFs data
