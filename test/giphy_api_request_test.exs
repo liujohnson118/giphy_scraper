@@ -1,8 +1,11 @@
 defmodule GiphyApiRequestTest do
   use ExUnit.Case
-  import Mox
 
-  setup :verify_on_exit!
+  # Below is an attempt to mock API response instead of having actual API calls go out during test,
+  # but it's not working.
+  # import Mox
+
+  # setup :verify_on_exit!
 
   # Setup to mock ReqMock
   # Mock doesn't really work. API request still going through.
