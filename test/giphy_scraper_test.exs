@@ -44,7 +44,7 @@ defmodule GiphyScraperTest do
       ]
 
       # Perform the test
-      assert GiphyScraper.search("Canada", GiphyApiRequestMock) == expected_result
+      assert GiphyScraper.search("Canada", GiphyApiRequestMock) === expected_result
     end
   end
 end

@@ -20,7 +20,7 @@ defmodule GiphyScraper.GiphyImageDataMatchTest do
         title: "Sample GIF"
       }
 
-      assert GiphyImageDataMatch.parse(raw_data) == expected_image
+      assert GiphyImageDataMatch.parse(raw_data) === expected_image
     end
 
     test "parses a list of raw Giphy data maps into a list of GiphyImage structs" do
@@ -54,7 +54,7 @@ defmodule GiphyScraper.GiphyImageDataMatchTest do
         }
       ]
 
-      assert GiphyImageDataMatch.parse(raw_data_list) == expected_images
+      assert GiphyImageDataMatch.parse(raw_data_list) === expected_images
     end
   end
 end
