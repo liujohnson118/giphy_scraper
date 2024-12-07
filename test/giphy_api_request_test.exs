@@ -31,8 +31,8 @@ defmodule GiphyApiRequestTest do
 
     # Assert that each gif in the list has the expected keys
     assert Enum.all?(result, fn gif ->
-      Map.has_key?(gif, "type") &&
       Map.has_key?(gif, "id") &&
+      Map.has_key?(gif, "url") &&
       Map.has_key?(gif, "title") &&
       Map.has_key?(gif, "username")
     end)
@@ -40,7 +40,7 @@ defmodule GiphyApiRequestTest do
 
 
   test "call/1 returns empty" do
-    # Test the call function with the query "police"
+    # Test the call function with bad query
     result = GiphyApiRequest.call("adkfjadkfjadkjfa")
 
     # Assert that the result is an empty list

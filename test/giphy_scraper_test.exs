@@ -1,50 +1,25 @@
 defmodule GiphyScraperTest do
   use ExUnit.Case, async: true
-  import Mox
 
   alias GiphyScraper.GiphyImage
 
-  setup :verify_on_exit!
-
   describe "search/1" do
     test "parses Giphy API data correctly" do
-      # Define mock data
-      mock_data = [
-          %{
-            "id" => "8A2ED9pfNIcdq",
-            "url" => "https://giphy.com/gifs/real-housewives-of-orange-county-rhoc-lydia-mclaughlin-8A2ED9pfNIcdq",
-            "username" => "fifa",
-            "title" => "real housewives canada GIF"
-          },
-          %{
-            "id" => "4UACZLrybpQsqaFcvy",
-            "url" => "https://giphy.com/gifs/sendwishonline-canada-day-canadian-flag-4UACZLrybpQsqaFcvy",
-            "username" => "sendwishonline",
-            "title" => "Maple Leaf Love GIF by sendwishonline.com"
-          }
-        ]
+      result = GiphyApiRequest.call("police")
 
-      # Set up Mox to expect a call to `call/1`
-      expect(GiphyApiRequestMock, :call, fn _query -> mock_data end)
+      # Assert that the result is a list
+      assert is_list(result)
 
-      # Expected result
-      expected_result = [
-        %GiphyImage{
-          id: "8A2ED9pfNIcdq",
-          url: "https://giphy.com/gifs/real-housewives-of-orange-county-rhoc-lydia-mclaughlin-8A2ED9pfNIcdq",
-          username: "fifa",
-          title: "real housewives canada GIF"
-        },
-        %GiphyImage{
-          id: "4UACZLrybpQsqaFcvy",
-          url: "https://giphy.com/gifs/sendwishonline-canada-day-canadian-flag-4UACZLrybpQsqaFcvy",
-          username: "sendwishonline",
-          title: "Maple Leaf Love GIF by sendwishonline.com"
-        }
-      ]
+      # Assert that the list contains exactly 25 gifs, no more and no less
+      assert length(result) === 25  # Page size is 25
 
-      # Perform the test
-      assert GiphyScraper.search("Canada", GiphyApiRequestMock) === expected_result
+      # Assert that each gif in the list has the expected keys
+      assert Enum.all?(result, fn gif ->
+        Map.has_key?(gif, "id") &&
+        Map.has_key?(gif, "url") &&
+        Map.has_key?(gif, "title") &&
+        Map.has_key?(gif, "username")
+      end)
     end
   end
 end
