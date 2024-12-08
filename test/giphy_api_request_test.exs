@@ -3,6 +3,8 @@ defmodule GiphyApiRequestTest do
 
   test "call/1 returns a list of gifs limited to 25" do
     # Test the call function with the query "police"
+    # If stub is working, we should see a test throwing an error about data not being correct.
+    # But no error about data is thrown, and real API call seems to be going through as well. 
     Req.Test.stub(GiphyApiRequest, fn conn ->
       Req.Test.json(conn, %{"celsius" => 25.0})
     end)
