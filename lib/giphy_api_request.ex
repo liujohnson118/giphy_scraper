@@ -1,4 +1,5 @@
 defmodule GiphyApiRequest do
+  require IEx
   @callback call(String.t()) :: map()
 
   # MAX page size
@@ -26,11 +27,21 @@ defmodule GiphyApiRequest do
 
   """
   def call(q) do
-    Enum.take(get_gifs(q), page_size())
+    Enum.take(get_gifs(q).body["data"], page_size())
   end
 
   defp get_gifs(q) do
-    Req.get!(build_url(q)).body["data"]
+    dbg()
+    IO.puts("---------------------")
+    IO.puts(Application.get_env(:giphy_scraper, :giphy_req_options, []))
+    IO.puts(Application.get_env(:giphy_scraper, :my_val))
+    IO.puts("---------------------")
+    [
+      base_url: build_url(q)
+    ]
+    |> Keyword.merge(Application.get_env(:giphy_scraper, :giphy_req_options, []))
+    |> Req.request()
+    # Req.get!(build_url(q)).body["data"]
   end
 
   defp build_url(q) do
