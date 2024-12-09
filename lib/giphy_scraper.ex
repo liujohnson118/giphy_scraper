@@ -25,8 +25,14 @@ defmodule GiphyScraper do
       ]
   """
 
-  def search(query, api \\ GiphyApiRequest) do
-    data = api.call(query)
-    GiphyScraper.GiphyImageDataMatch.parse(data)
+  @giphy_api_request Application.compile_env(:giphy_scraper, :giphy_api_request, GiphyApiRequest)
+
+  def search(query) do
+    IO.puts "-------------------------"
+    IO.inspect @giphy_api_request
+    IO.puts "-------------------------"
+    query
+    |> @giphy_api_request.call()
+    |> GiphyScraper.GiphyImageDataMatch.parse()
   end
 end

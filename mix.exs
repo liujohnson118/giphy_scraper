@@ -7,7 +7,13 @@ defmodule GiphyScraper.MixProject do
       version: "0.1.0",
       elixir: "~> 1.17",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      elixirc_paths:
+        if Mix.env() == :test do
+          ["lib", "test/lib"]
+        else
+          ["lib"]
+        end
     ]
   end
 
@@ -23,7 +29,8 @@ defmodule GiphyScraper.MixProject do
     [
       {:req, "~> 0.5.0"},
       {:mox, "~> 1.0", only: :test},
-      {:dotenv, "~> 3.0.0", only: [:dev, :test]}
+      {:dotenv, "~> 3.0.0", only: [:dev, :test]},
+      {:plug, "~> 1.0"}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]
