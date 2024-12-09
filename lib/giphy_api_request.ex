@@ -27,21 +27,16 @@ defmodule GiphyApiRequest do
 
   """
   def call(q) do
-    Enum.take(get_gifs(q).body["data"], page_size())
+    { :ok, %{ status: 200, body: %{ "data" => data } } } = gifs_response(q)
+    data
   end
 
-  defp get_gifs(q) do
-    dbg()
-    IO.puts("---------------------")
-    IO.puts(Application.get_env(:giphy_scraper, :giphy_req_options, []))
-    IO.puts(Application.get_env(:giphy_scraper, :my_val))
-    IO.puts("---------------------")
+  defp gifs_response(q) do
     [
       base_url: build_url(q)
     ]
     |> Keyword.merge(Application.get_env(:giphy_scraper, :giphy_req_options, []))
     |> Req.request()
-    # Req.get!(build_url(q)).body["data"]
   end
 
   defp build_url(q) do
@@ -52,7 +47,8 @@ defmodule GiphyApiRequest do
     URI.encode_query(
       %{
         "api_key" => System.get_env("GIPHY_API_KEY"),
-        "q" => q
+        "q" => q,
+        "limit" => page_size()
       }
     )
   end
