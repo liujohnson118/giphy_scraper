@@ -1,4 +1,5 @@
 defmodule GiphyScraper.Test.Stub.GiphyApiRequestStub do
+  @spec call(any()) :: [%{optional(<<_::16, _::_*8>>) => <<_::24, _::_*8>>}, ...]
   def call(_) do
     [
       %{
